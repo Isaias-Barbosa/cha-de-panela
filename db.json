@@ -1,0 +1,226 @@
+{
+  "gifts": [
+    {
+      "nome": "Air Frayer",
+      "imagem": "https://jcsbrasil.vteximg.com.br/arquivos/ids/208411-1000-1000/OFRT520--4-.jpg?v=638108535620170000",
+      "categoria": "Eletrônicos",
+      "tipo": "Oester ",
+      "corPreferencia": "Preto",
+      "links": [
+        {
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "loja": "Casas Bahia",
+          "url": "https://www.casasbahia.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsKBYPmQ6M5FmQaUQaXG0fQ9GETHw6CKSew&s"
+        },
+        {
+          "loja": "Oester",
+          "url": "https://www.oster.com.br/",
+          "logo": "https://s2-techtudo.glbimg.com/KXDxcoTKppRnP1ZaZRP1tbONRO0=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2024/s/0/XwT8GZSTOdjnu46oxpwQ/oster.jpg"
+        }
+      ],
+      "comprado": false,
+      "id": "5b76"
+    },
+    {
+      "nome": "Batedeira",
+      "imagem": "https://jcsbrasil.vteximg.com.br/arquivos/ids/216712-1000-1000/1---OBAT641.3.jpg?v=638276963782730000",
+      "categoria": "Eletrônicos",
+      "tipo": "Oester",
+      "corPreferencia": "Preto",
+      "links": [
+        {
+          "loja": "Oester",
+          "url": "https://www.oster.com.br/",
+          "logo": "https://s2-techtudo.glbimg.com/KXDxcoTKppRnP1ZaZRP1tbONRO0=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2024/s/0/XwT8GZSTOdjnu46oxpwQ/oster.jpg"
+        },
+        {
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "loja": "Casas Bahia",
+          "url": "https://www.casasbahia.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsKBYPmQ6M5FmQaUQaXG0fQ9GETHw6CKSew&s"
+        },
+        {
+          "loja": "Magazine Luiza",
+          "url": "https://www.magazineluiza.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+        }
+      ],
+      "comprado": false,
+      "id": "1ab6"
+    },
+    {
+      "nome": "Multiprocessador",
+      "imagem": "https://jcsbrasil.vteximg.com.br/arquivos/ids/220794-1000-1000/1---OMPR850--1-.jpg?v=638446362933700000",
+      "categoria": "Eletrônicos",
+      "tipo": "Oester/Mundial",
+      "corPreferencia": "Preto",
+      "links": [
+        {
+          "loja": "Oester",
+          "url": "https://www.oster.com.br/",
+          "logo": "https://s2-techtudo.glbimg.com/KXDxcoTKppRnP1ZaZRP1tbONRO0=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2024/s/0/XwT8GZSTOdjnu46oxpwQ/oster.jpg"
+        },
+        {
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "loja": "Magazine Luiza",
+          "url": "https://www.magazineluiza.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+        },
+        {
+          "loja": "Casas Bahia",
+          "url": "https://www.casasbahia.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsKBYPmQ6M5FmQaUQaXG0fQ9GETHw6CKSew&s"
+        }
+      ],
+      "comprado": false,
+      "id": "c8f5"
+    },
+    {
+      "id": "962b",
+      "nome": "Panela Elétrica",
+      "imagem": "https://t62533.vteximg.com.br/arquivos/ids/942876-1000-1000/PE42.jpg?v=638265785854000000",
+      "categoria": "Eletrônicos",
+      "tipo": "Mondial/Philco/Electrolux/Britânia",
+      "corPreferencia": "Preto",
+      "links": [
+        {
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "loja": "Casas Bahia",
+          "url": "https://www.casasbahia.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsKBYPmQ6M5FmQaUQaXG0fQ9GETHw6CKSew&s"
+        },
+        {
+          "loja": "Magazine Luiza",
+          "url": "https://www.magazineluiza.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+        },
+        {
+          "loja": "Midea",
+          "url": "https://www.midea.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_3wodBjqvuz2KxlWQizZN3PcAy50VNNahKw&s"
+        }
+      ],
+      "comprado": false
+    },
+    {
+      "id": "3c40",
+      "nome": "Conjunto de Panelas",
+      "imagem": "https://down-br.img.susercontent.com/file/sg-11134201-7rfi9-m3qpivjkno2lc0",
+      "categoria": "Cozinha",
+      "tipo": "Ceramica",
+      "links": [
+        {
+          "loja": "Camicado",
+          "url": "https://www.camicado.com.br/",
+          "logo": "https://logospng.org/download/camicado/camicado-256.png"
+        },
+        {
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "loja": "Magazine Luiza",
+          "url": "https://www.magazineluiza.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+        }
+      ],
+      "comprado": false
+    },
+    {
+      "id": "bb67",
+      "nome": "Escorredor de Massas",
+      "imagem": "https://images.tcdn.com.br/img/img_prod/1292607/escorredor_de_massas_em_inox_com_alca_24_cm_baccani_2235_2_aa204fbb4d629bb720386dc5a5c15294.jpg",
+      "categoria": "Cozinha",
+      "tipo": "Inox",
+      "links": [
+        {
+          "id": "609d",
+          "loja": "Camicado",
+          "url": "https://www.camicado.com.br/",
+          "logo": "https://www.cartacapital.com.br/cupons/img/lojas/logo/camicado.png"
+        },
+        {
+          "id": 1,
+          "loja": "Amazon",
+          "url": "https://www.amazon.com.br/",
+          "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+        },
+        {
+          "id": "9136",
+          "loja": "Magazine Luiza",
+          "url": "https://www.magazineluiza.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+        },
+        {
+          "id": "8437",
+          "loja": "Havan",
+          "url": "https://www.havan.com.br/",
+          "logo": "https://logodownload.org/wp-content/uploads/2015/05/havan-logo-0.png"
+        }
+      ],
+      "comprado": false
+    }
+  ],
+  "lojas": [
+    {
+      "id": 1,
+      "loja": "Amazon",
+      "url": "https://www.amazon.com.br/",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7ZoPxHxiJ8nsrZTejjkVOIWcBlJt1D0KhLQ&s"
+    },
+    {
+      "id": 2,
+      "loja": "Casas Bahia",
+      "url": "https://www.casasbahia.com.br/",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvsKBYPmQ6M5FmQaUQaXG0fQ9GETHw6CKSew&s"
+    },
+    {
+      "id": "609d",
+      "loja": "Camicado",
+      "url": "https://www.camicado.com.br/",
+      "logo": "https://www.cartacapital.com.br/cupons/img/lojas/logo/camicado.png"
+    },
+    {
+      "id": "c440",
+      "loja": "Oester",
+      "url": "https://www.oster.com.br/",
+      "logo": "https://s2-techtudo.glbimg.com/KXDxcoTKppRnP1ZaZRP1tbONRO0=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2024/s/0/XwT8GZSTOdjnu46oxpwQ/oster.jpg"
+    },
+    {
+      "id": "9136",
+      "loja": "Magazine Luiza",
+      "url": "https://www.magazineluiza.com.br/",
+      "logo": "https://logodownload.org/wp-content/uploads/2014/06/magalu-logo-0.png"
+    },
+    {
+      "id": "a8ae",
+      "loja": "MIdea",
+      "url": "https://www.midea.com.br/",
+      "logo": "https://discovertemplate.com/wp-content/uploads/2024/03/Midea.jpg"
+    },
+    {
+      "id": "8437",
+      "loja": "Havan",
+      "url": "https://www.havan.com.br/",
+      "logo": "https://logodownload.org/wp-content/uploads/2015/05/havan-logo-0.png"
+    }
+  ]
+}
