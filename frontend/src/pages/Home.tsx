@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Gift } from "../types";
-import axios from "axios";
+import api from "../services/api"; // <- aqui
 import GiftList from "../components/GiftList";
 import MarkGiftModal from "../components/MarkGiftModal";
 
@@ -9,14 +9,15 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    axios
-      .get<Gift[]>("http://localhost:5000/gifts")
+    // Busca os presentes usando a instância api
+    api
+      .get<Gift[]>("/gifts")
       .then((res) => setGifts(res.data))
       .catch((err) => console.error("Erro ao buscar presentes:", err));
   }, []);
 
   const handleMarkAsBought = async (id: number) => {
-    await axios.patch(`http://localhost:5000/gifts/${id}`, { comprado: true });
+   await api.patch(`/gifts/${id}`, { comprado: true }); // <- aqui
     setGifts((prev) =>
       prev.map((gift) => (gift.id === id ? { ...gift, comprado: true } : gift))
     );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../services/api"; // <- aqui
 import { Trash2, Pencil } from "lucide-react";
 
 interface GiftLink {
@@ -54,7 +54,7 @@ export default function Admin() {
 
   const carregarPresentes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/gifts");
+      const res = await api.get("/gifts"); // <- aqui
       setGifts(res.data);
     } catch (error) {
       console.error("Erro ao buscar presentes:", error);
@@ -63,7 +63,7 @@ export default function Admin() {
 
   const carregarLojas = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/lojas");
+     const res = await api.get("/lojas"); // <- aqui
       setLojas(res.data);
     } catch (error) {
       console.error("Erro ao buscar lojas:", error);
@@ -92,10 +92,10 @@ export default function Admin() {
 
    try {
       if (editandoId) {
-        await axios.put(`http://localhost:5000/gifts/${editandoId}`, gift);
+        await api.put(`/gifts/${editandoId}`, gift); // <- aqui
         setMensagem("Presente atualizado com sucesso!");
       } else {
-        await axios.post("http://localhost:5000/gifts", gift);
+       await api.post("/gifts", gift); // <- aqui
         setMensagem("Presente adicionado com sucesso!");
       }
 
@@ -113,7 +113,7 @@ export default function Admin() {
     if (!confirm("Tem certeza que deseja excluir este presente?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/gifts/${id}`);
+     await api.delete(`/gifts/${id}`); // <- aqui
       setGifts(gifts.filter((g) => g.id !== id));
     } catch (error) {
       console.error("Erro ao excluir presente:", error);
@@ -151,7 +151,7 @@ export default function Admin() {
   const handleAddLoja = async () => {
     if (!novaLoja.loja || !novaLoja.url || !novaLoja.logo) return;
     try {
-      await axios.post("http://localhost:5000/lojas", novaLoja);
+     await api.post("/lojas", novaLoja); // <- aqui
       setNovaLoja({ loja: "", url: "", logo: "" });
       carregarLojas();
     } catch (error) {
