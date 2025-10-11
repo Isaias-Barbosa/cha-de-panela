@@ -29,7 +29,7 @@ export default function Home() {
       <div className="flex flex-col items-center py-10 flex-1">
       {/* Título */}
       <h1 className="text-3xl font-bold mb-4 text-gray-700 text-center">
-        Chá de Panela de Isaías & Paula 💕
+        Chá de Panela Isaías & Paula 💕
       </h1>
 
       {/* Descrição */}

@@ -10,7 +10,7 @@ export default function GiftList({ gifts }: GiftListProps) {
   const categorias = Array.from(new Set(gifts.map((g) => g.categoria)));
 
   return (
-    <div className="w-7xl px-12 text-center">
+    <div className="min-h-screen px-12 text-center">
       {categorias.map((cat) => (
         <div key={cat} className="mb-12">
           <h2 className="text-2xl font-bold mb-4 text-gray-700">{cat}</h2>
