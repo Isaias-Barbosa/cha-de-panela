@@ -24,18 +24,27 @@ export default function Home() {
   };
 
   return (
-     <div className="flex flex-col min-h-screen bg-blue-50 py-10 w-full">
+    
+     <div className="flex flex-col min-h-screen bg-blue-50 py-10 w-full"
+      style={{
+        backgroundImage:
+          "url('https://www.transparenttextures.com/patterns/flowers.png')",
+        backgroundRepeat: "repeat",
+      }}
+     >
        {/* Container centralizado */}
       <div className="flex flex-col items-center py-10 flex-1">
       {/* Título */}
-      <h1 className="text-3xl font-bold mb-4 text-gray-700 text-center">
+      <h1 className="text-3xl font-['Great_Vibes'] mb-4 text-gray-700 text-center"
+       style={{ letterSpacing: "1px" }}
+      >
         Chá de Panela Isaías & Paula 💕
       </h1>
-
       {/* Descrição */}
-      <p className="text-gray-600 mb-8 text-center max-w-md">
-        Seja bem-vindo(a)! Veja abaixo as sugestões de presentes. <br />
-        Caso já tenha comprado algum, marque para que outros saibam.
+      <p className="text-gray-600 mb-4 text-center max-w-md ">
+        Seja bem-vindo(a)! Veja abaixo as sugestões de presentes.
+        <p className="bg-red-300 py-2 text-gray-700 p-1 rounded-lg text-center">
+        Ao escolher um presente, por favor, clique no botão no final da pagina informando qual presente você comprou.</p>
       </p>
 
        {/* Aviso */}
@@ -50,13 +59,14 @@ export default function Home() {
       <GiftList gifts={gifts} />
 
       {/* Botão para abrir modal */}
+    
       <button
         onClick={() => setModalOpen(true)}
         className="mt-8 bg-pink-500 text-white px-5 py-3 rounded-xl hover:bg-pink-600 transition"
       >
         Já comprou um presente? Clique aqui e informe
       </button>
-      </div>
+    </div>
 
       {/* Modal */}
       <MarkGiftModal
@@ -65,6 +75,9 @@ export default function Home() {
         gifts={gifts}
         onMark={handleMarkAsBought}
       />
+
+    
     </div>
+    
   );
 }

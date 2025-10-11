@@ -34,7 +34,8 @@ export default function MarkGiftModal({
       isOpen={isOpen}
       onRequestClose={onClose}
       className="bg-white rounded-2xl shadow-lg p-6 max-w-md mx-auto mt-20 outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start"
+     overlayClassName="fixed inset-0 bg-white/20 backdrop-blur-sm flex justify-center items-start"
+
     >
       <h2 className="text-xl font-semibold mb-4 text-gray-700">
         Informe qual presente você comprou 💝
