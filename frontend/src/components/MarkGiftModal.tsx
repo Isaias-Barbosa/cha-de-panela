@@ -21,8 +21,14 @@ export default function MarkGiftModal({
 
   const handleSubmit = () => {
     if (selectedGift) {
+
+      // Marca como comprado
       onMark(Number(selectedGift));
+
+      // Reseta o select
       setSelectedGift("");
+
+       // Fecha o modal
       onClose();
     }
   };
@@ -33,8 +39,8 @@ export default function MarkGiftModal({
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      className="bg-white rounded-2xl shadow-lg p-6 max-w-md mx-auto mt-20 outline-none"
-     overlayClassName="fixed inset-0 bg-white/20 backdrop-blur-sm flex justify-center items-start"
+      className="bg-white rounded-2xl shadow-lg p-6 max-w-md mx-auto mt-20 outline-none transition-transform duration-300 ease-out scale-95"
+     overlayClassName="fixed inset-0 bg-white/20 backdrop-blur-sm flex justify-center items-start transition-opacity duration-300 ease-in"
 
     >
       <h2 className="text-xl font-semibold mb-4 text-gray-700">
@@ -44,7 +50,7 @@ export default function MarkGiftModal({
       <select
         value={selectedGift}
         onChange={(e) => setSelectedGift(e.target.value)}
-        className="w-full bg-gray-700 border rounded-lg p-2 mb-4"
+        className="w-full bg-gray-700 border rounded-lg p-2 mb-4 text-white"
       >
         <option value="">Selecione um presente</option>
         {availableGifts.map((gift) => (
@@ -57,14 +63,14 @@ export default function MarkGiftModal({
       <div className="flex justify-end gap-3">
         <button
           onClick={onClose}
-          className="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400"
+          className="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
         >
           Cancelar
         </button>
         <button
           onClick={handleSubmit}
           disabled={!selectedGift}
-          className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 disabled:opacity-50"
+          className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 disabled:opacity-50 transition"
         >
           Confirmar
         </button>
