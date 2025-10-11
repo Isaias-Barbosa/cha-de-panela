@@ -207,6 +207,7 @@ export default function Admin() {
             <option>Decoração</option>
             <option>Eletrônicos</option>
             <option>Móveis</option>
+            <option>Sala de Estar</option>
           </select>
         </div>
 
