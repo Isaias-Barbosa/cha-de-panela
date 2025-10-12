@@ -74,11 +74,11 @@ export default function PresentPage() {
               {gift.nome}
             </h2>
             {gift.tipo && (
-              <p className="text-sm text-gray-600 mb-1">Tipo: {gift.tipo}</p>
+              <p className="text-sm text-gray-600 mb-1">Tipo Sugerido: {gift.tipo}</p>
             )}
             {gift.corPreferencia && (
               <p className="text-sm text-gray-600 mb-2">
-                Cor: {gift.corPreferencia}
+                Cor Sugerida: {gift.corPreferencia}
               </p>
             )}
             <p className="text-sm text-gray-500 mb-4">
@@ -120,9 +120,11 @@ export default function PresentPage() {
 
         <p className="bg-yellow-50 text-gray-800 p-3 rounded mb-4 text-sm">
           Você realmente deseja comprar este presente para o casal?
+        </p><p className="bg-red-400 text-white p-3 rounded mb-4 text-sm">
+            Ao confirmar, o presente será marcado como "Presenteado" no site para que outros convidados não o escolham.
         </p>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 ">
           <button
             onClick={handleConfirm}
             disabled={processing || gift.comprado}
