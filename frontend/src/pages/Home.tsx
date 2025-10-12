@@ -50,7 +50,7 @@ export default function Home() {
        {/* Aviso */}
       <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg mb-8 max-w-3xl text-center">
         Os links das lojas abaixo são apenas sugestões para os convidados, porém, sinta-se livre
-        para comprar na loja de sua preferência, se não encontrar o que queria comprar aqui no site,
+        para comprar na loja de sua preferência, se não encontrar o que queira comprar aqui no site,
         pode escolher outro presente também e entregar no dia do Chá de Panelas. <br />
             <p className="text-gray-600 text-mb">As imagens abaixos são ilustrativas</p>
       </div>
