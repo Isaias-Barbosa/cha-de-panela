@@ -41,10 +41,10 @@ export default function Home() {
         Chá de Panela Isaías & Paula 💕
       </h1>
       {/* Descrição */}
-      <p className="text-gray-600 mb-4 text-center max-w-md ">
+      <p className="text-gray-600 mb-1 text-center max-w-md ">
         Seja bem-vindo(a)! Veja abaixo as sugestões de presentes.
-        <p className="bg-red-300 py-2 text-gray-700 p-1 rounded-lg text-center">
-        Ao escolher um presente, por favor, clique no botão no final da pagina informando qual presente você comprou.</p>
+        <p className="bg-red-300 py-2 text-gray-700 p-1 rounded-lg mb-4 text-center">
+        Ao escolher um presente, por favor, clique no botão Presentear para termos um controle do que foi presenteado.</p>
       </p>
 
        {/* Aviso */}
@@ -54,20 +54,12 @@ export default function Home() {
         pode escolher outro presente também e entregar no dia do Chá de Panelas. <br />
             <p className="text-gray-600 text-mb">As imagens abaixos são ilustrativas</p>
       </div>
-      
-
+      <p className="bg-red-300 py-2 text-gray-700 p-4 rounded-lg mb-8 text-center ">
+        Se as imagens dos produtos não aparecer, aguarde entre 30 segundos a 1 minuto que elas irão aparecer de forma automática.</p>
 
       {/* Lista de presentes */}
       <GiftList gifts={gifts} />
 
-      {/* Botão para abrir modal */}
-    
-      <button
-        onClick={() => setModalOpen(true)}
-        className="mt-8 bg-pink-500 text-white px-5 py-3 rounded-xl hover:bg-pink-600 transition"
-      >
-        Já comprou um presente? Clique aqui e informe
-      </button>
     </div>
 
       {/* Modal */}

@@ -27,7 +27,7 @@ interface Loja {
 }
 
 export default function Admin() {
-    // 🎁 Estados de presentes
+  // 🎁 Estados de presentes
   const [nome, setNome] = useState("");
   const [imagem, setImagem] = useState("");
   const [categoria, setCategoria] = useState("Cama, Mesa e Banho");
@@ -35,18 +35,22 @@ export default function Admin() {
   const [gifts, setGifts] = useState<Gift[]>([]);
   const [editandoId, setEditandoId] = useState<number | null>(null);
 
-     // 🧩 Novos estados de tipo e cor
+  // 🧩 Novos estados de tipo e cor
   const [temTipo, setTemTipo] = useState(false);
   const [tipo, setTipo] = useState("");
   const [temCor, setTemCor] = useState(false);
   const [corPreferencia, setCorPreferencia] = useState("");
 
-   // 🏬 Lojas
+  // 🏬 Lojas
   const [lojas, setLojas] = useState<Loja[]>([]);
   const [lojasSelecionadas, setLojasSelecionadas] = useState<Loja[]>([]);
-  const [novaLoja, setNovaLoja] = useState<Loja>({ loja: "", url: "", logo: "" });
+  const [novaLoja, setNovaLoja] = useState<Loja>({
+    loja: "",
+    url: "",
+    logo: "",
+  });
 
-   // 🔄 Carrega dados iniciais
+  // 🔄 Carrega dados iniciais
   useEffect(() => {
     carregarPresentes();
     carregarLojas();
@@ -63,13 +67,12 @@ export default function Admin() {
 
   const carregarLojas = async () => {
     try {
-     const res = await api.get("/lojas"); // <- aqui
+      const res = await api.get("/lojas"); // <- aqui
       setLojas(res.data);
     } catch (error) {
       console.error("Erro ao buscar lojas:", error);
     }
   };
-
 
   // 🟢 Adicionar ou editar presente
 
@@ -80,7 +83,7 @@ export default function Admin() {
       return;
     }
 
-  const gift: Gift = {
+    const gift: Gift = {
       nome,
       imagem,
       categoria,
@@ -90,12 +93,12 @@ export default function Admin() {
       comprado: false,
     };
 
-   try {
+    try {
       if (editandoId) {
         await api.put(`/gifts/${editandoId}`, gift); // <- aqui
         setMensagem("Presente atualizado com sucesso!");
       } else {
-       await api.post("/gifts", gift); // <- aqui
+        await api.post("/gifts", gift); // <- aqui
         setMensagem("Presente adicionado com sucesso!");
       }
 
@@ -107,20 +110,19 @@ export default function Admin() {
     }
   };
 
-    // 🔴 Excluir presente
+  // 🔴 Excluir presente
   const handleDelete = async (id?: number) => {
     if (!id) return;
     if (!confirm("Tem certeza que deseja excluir este presente?")) return;
 
     try {
-     await api.delete(`/gifts/${id}`); // <- aqui
+      await api.delete(`/gifts/${id}`); // <- aqui
       setGifts(gifts.filter((g) => g.id !== id));
     } catch (error) {
       console.error("Erro ao excluir presente:", error);
     }
   };
 
-  
   // ✏️ Editar presente
   const handleEdit = (gift: Gift) => {
     setEditandoId(gift.id || null);
@@ -134,7 +136,47 @@ export default function Admin() {
     setLojasSelecionadas(gift.links || []);
   };
 
- // 🧹 Limpar form
+  // 🟢 Marcar presente como "Comprado"
+  const handleMarcarComoComprado = async () => {
+    if (!editandoId) return;
+
+    try {
+      const giftSelecionado = gifts.find((g) => g.id === editandoId);
+      if (!giftSelecionado) return;
+
+      const atualizado = { ...giftSelecionado, comprado: true };
+
+      await api.put(`/gifts/${editandoId}`, atualizado);
+      setMensagem("Presente marcado como 'Comprado'!");
+      carregarPresentes();
+      limparFormulario();
+    } catch (error) {
+      console.error("Erro ao atualizar presente:", error);
+      setMensagem("Erro ao marcar como 'Comprado'.");
+    }
+  };
+
+  // 🟡 Marcar presente como "Não comprado"
+  const handleMarcarComoNaoComprado = async () => {
+    if (!editandoId) return;
+
+    try {
+      const giftSelecionado = gifts.find((g) => g.id === editandoId);
+      if (!giftSelecionado) return;
+
+      const atualizado = { ...giftSelecionado, comprado: false };
+
+      await api.put(`/gifts/${editandoId}`, atualizado);
+      setMensagem("Presente marcado como 'Não comprado'!");
+      carregarPresentes();
+      limparFormulario();
+    } catch (error) {
+      console.error("Erro ao atualizar presente:", error);
+      setMensagem("Erro ao marcar como 'Não comprado'.");
+    }
+  };
+
+  // 🧹 Limpar form
   const limparFormulario = () => {
     setNome("");
     setImagem("");
@@ -147,11 +189,11 @@ export default function Admin() {
     setLojasSelecionadas([]);
   };
 
-    // 🏬 Cadastrar loja
+  // 🏬 Cadastrar loja
   const handleAddLoja = async () => {
     if (!novaLoja.loja || !novaLoja.url || !novaLoja.logo) return;
     try {
-     await api.post("/lojas", novaLoja); // <- aqui
+      await api.post("/lojas", novaLoja); // <- aqui
       setNovaLoja({ loja: "", url: "", logo: "" });
       carregarLojas();
     } catch (error) {
@@ -159,24 +201,28 @@ export default function Admin() {
     }
   };
 
-   const handleSelectLoja = (loja: Loja) => {
-  setLojasSelecionadas((prevSelecionadas) => {
-    const existe = prevSelecionadas.some((l) => l.loja === loja.loja);
-    if (existe) {
-      return prevSelecionadas.filter((l) => l.loja !== loja.loja);
-    } else {
-      return [...prevSelecionadas, loja];
-    }
-  });
-};
+  const handleSelectLoja = (loja: Loja) => {
+    setLojasSelecionadas((prevSelecionadas) => {
+      const existe = prevSelecionadas.some((l) => l.loja === loja.loja);
+      if (existe) {
+        return prevSelecionadas.filter((l) => l.loja !== loja.loja);
+      } else {
+        return [...prevSelecionadas, loja];
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700">Admin - Adicionar Presente</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-700">
+        Admin - Adicionar Presente
+      </h1>
 
       <div className="max-w-3xl bg-blue-50 p-6 rounded-2xl shadow-md space-y-4">
         <div>
-          <label className="block text-gray-800 font-semibold mb-1">Nome do presente</label>
+          <label className="block text-gray-800 font-semibold mb-1">
+            Nome do presente
+          </label>
           <input
             type="text"
             value={nome}
@@ -186,7 +232,9 @@ export default function Admin() {
         </div>
 
         <div>
-          <label className="block font-semibold mb-1 text-gray-800 ">URL da imagem</label>
+          <label className="block font-semibold mb-1 text-gray-800 ">
+            URL da imagem
+          </label>
           <input
             type="text"
             value={imagem}
@@ -196,7 +244,9 @@ export default function Admin() {
         </div>
 
         <div>
-          <label className="block text-gray-800 font-semibold mb-1">Categoria</label>
+          <label className="block text-gray-800 font-semibold mb-1">
+            Categoria
+          </label>
           <select
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
@@ -211,14 +261,18 @@ export default function Admin() {
           </select>
         </div>
 
-         {/* Preferência de tipo */}
+        {/* Preferência de tipo */}
         <div>
-          <label className="block text-gray-800 font-semibold mb-1">Tem preferência para o tipo?</label>
+          <label className="block text-gray-800 font-semibold mb-1">
+            Tem preferência para o tipo?
+          </label>
           <div className="flex gap-4 mb-2">
             <button
               type="button"
               onClick={() => setTemTipo(true)}
-              className={`px-3 py-1 rounded-lg ${temTipo ? "bg-green-500 text-white" : "bg-gray-200"}`}
+              className={`px-3 py-1 rounded-lg ${
+                temTipo ? "bg-green-500 text-white" : "bg-gray-200"
+              }`}
             >
               Sim
             </button>
@@ -228,7 +282,9 @@ export default function Admin() {
                 setTemTipo(false);
                 setTipo("");
               }}
-              className={`px-3 py-1 rounded-lg ${!temTipo ? "bg-red-500 text-white" : "bg-gray-200"}`}
+              className={`px-3 py-1 rounded-lg ${
+                !temTipo ? "bg-red-500 text-white" : "bg-gray-200"
+              }`}
             >
               Não
             </button>
@@ -246,12 +302,16 @@ export default function Admin() {
 
         {/* Preferência de cor */}
         <div>
-          <label className="block text-gray-800 font-semibold mb-1">Tem preferência para cor?</label>
+          <label className="block text-gray-800 font-semibold mb-1">
+            Tem preferência para cor?
+          </label>
           <div className="flex gap-4 mb-2">
             <button
               type="button"
               onClick={() => setTemCor(true)}
-              className={`px-3 py-1 rounded-lg ${temCor ? "bg-green-500 text-white" : "bg-gray-200"}`}
+              className={`px-3 py-1 rounded-lg ${
+                temCor ? "bg-green-500 text-white" : "bg-gray-200"
+              }`}
             >
               Sim
             </button>
@@ -261,7 +321,9 @@ export default function Admin() {
                 setTemCor(false);
                 setCorPreferencia("");
               }}
-              className={`px-3 py-1 rounded-lg ${!temCor ? "bg-red-500 text-white" : "bg-gray-200"}`}
+              className={`px-3 py-1 rounded-lg ${
+                !temCor ? "bg-red-500 text-white" : "bg-gray-200"
+              }`}
             >
               Não
             </button>
@@ -277,10 +339,11 @@ export default function Admin() {
           )}
         </div>
 
-
         {/* Seleção de lojas */}
         <div>
-          <label className="block text-gray-800 font-semibold mb-2">Selecionar lojas</label>
+          <label className="block text-gray-800 font-semibold mb-2">
+            Selecionar lojas
+          </label>
           <div className="flex flex-wrap gap-3">
             {lojas.map((loja) => (
               <button
@@ -293,7 +356,11 @@ export default function Admin() {
                     : "bg-white border-gray-400"
                 }`}
               >
-                <img src={loja.logo} alt={loja.loja} className="w-6 h-6 object-contain" />
+                <img
+                  src={loja.logo}
+                  alt={loja.loja}
+                  className="w-6 h-6 object-contain"
+                />
                 <span className="text-sm">{loja.loja}</span>
               </button>
             ))}
@@ -301,19 +368,27 @@ export default function Admin() {
         </div>
 
         {lojasSelecionadas.length > 0 && (
-  <div className="mt-4 bg-white border rounded-lg p-3">
-    <p className="font-semibold mb-2 text-gray-700">Lojas selecionadas:</p>
-    <ul className="flex flex-wrap gap-2">
-      {lojasSelecionadas.map((l) => (
-        <li key={l.loja} className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full">
-          <img src={l.logo} alt={l.loja} className="w-5 h-5 object-contain" />
-          <span className="text-sm">{l.loja}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-)}
-
+          <div className="mt-4 bg-white border rounded-lg p-3">
+            <p className="font-semibold mb-2 text-gray-700">
+              Lojas selecionadas:
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {lojasSelecionadas.map((l) => (
+                <li
+                  key={l.loja}
+                  className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full"
+                >
+                  <img
+                    src={l.logo}
+                    alt={l.loja}
+                    className="w-5 h-5 object-contain"
+                  />
+                  <span className="text-sm">{l.loja}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <button
           onClick={handleSubmit}
@@ -322,12 +397,38 @@ export default function Admin() {
           Salvar presente
         </button>
 
-        {mensagem && <p className="mt-2 text-center border rounded-b-lg border-blue-200 text-green-500">{mensagem}</p>}
+        {editandoId && (
+          <div className="mt-4 flex flex-col items-center gap-2">
+            {gifts.find((g) => g.id === editandoId)?.comprado ? (
+              <button
+                onClick={handleMarcarComoNaoComprado}
+                className="w-full px-4 py-3 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition"
+              >
+                Marcar como Não Comprado
+              </button>
+            ) : (
+              <button
+                onClick={handleMarcarComoComprado}
+                className="w-full px-4 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition"
+              >
+                Marcar como Comprado
+              </button>
+            )}
+          </div>
+        )}
+
+        {mensagem && (
+          <p className="mt-2 text-center border rounded-b-lg border-blue-200 text-green-500">
+            {mensagem}
+          </p>
+        )}
       </div>
 
       {/* 🏬 Cadastro de Lojas */}
       <div className="bg-yellow-50 p-6 rounded-2xl shadow-md space-y-4 px-12 mt-6">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">Cadastro de Lojas</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">
+          Cadastro de Lojas
+        </h2>
 
         <input
           type="text"
@@ -360,20 +461,31 @@ export default function Admin() {
 
         <div className="mt-6 max-h-80 overflow-y-auto">
           {lojas.map((loja) => (
-            <div key={loja.id} className="flex items-center gap-3 mb-2 bg-white p-2 rounded-lg border">
-              <img src={loja.logo} alt={loja.loja} className="w-8 h-8 object-contain" />
+            <div
+              key={loja.id}
+              className="flex items-center gap-3 mb-2 bg-white p-2 rounded-lg border"
+            >
+              <img
+                src={loja.logo}
+                alt={loja.loja}
+                className="w-8 h-8 object-contain"
+              />
               <div className="flex-1">
                 <p className="font-semibold">{loja.loja}</p>
-                <a href={loja.url} target="_blank" className="text-blue-600 text-sm">
+                <a
+                  href={loja.url}
+                  target="_blank"
+                  className="text-blue-600 text-sm"
+                >
                   {loja.url}
                 </a>
               </div>
-          </div>
+            </div>
           ))}
         </div>
-       </div>
+      </div>
 
-       {/* 🧾 Tabela */}
+      {/* 🧾 Tabela */}
       <div className="max-w-6xl mx-auto overflow-x-auto mt-12">
         <table className="min-w-full border-collapse bg-gray-700 shadow rounded-2xl overflow-hidden">
           <thead>
@@ -397,18 +509,27 @@ export default function Admin() {
                 <td className="p-3 border-b">
                   {gift.corPreferencia ? (
                     <span style={{ color: gift.corPreferencia.toLowerCase() }}>
-                      {gift.corPreferencia.charAt(0).toUpperCase() + gift.corPreferencia.slice(1)}
+                      {gift.corPreferencia.charAt(0).toUpperCase() +
+                        gift.corPreferencia.slice(1)}
                     </span>
                   ) : (
                     "-"
                   )}
                 </td>
-                <td className="p-3 border-b">{gift.comprado ? "Sim" : "Não"}</td>
+                <td className="p-3 border-b">
+                  {gift.comprado ? "Sim" : "Não"}
+                </td>
                 <td className="p-3 border-b text-center flex justify-center gap-4">
-                  <button onClick={() => handleEdit(gift)} className="text-blue-600 hover:text-blue-800">
+                  <button
+                    onClick={() => handleEdit(gift)}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
                     <Pencil size={18} />
                   </button>
-                  <button onClick={() => handleDelete(gift.id)} className="text-red-600 hover:text-red-800">
+                  <button
+                    onClick={() => handleDelete(gift.id)}
+                    className="text-red-600 hover:text-red-800"
+                  >
                     <Trash2 size={18} />
                   </button>
                 </td>
@@ -418,7 +539,9 @@ export default function Admin() {
         </table>
 
         {gifts.length === 0 && (
-          <p className="text-center text-gray-600 mt-6">Nenhum presente cadastrado ainda.</p>
+          <p className="text-center text-gray-600 mt-6">
+            Nenhum presente cadastrado ainda.
+          </p>
         )}
       </div>
     </div>
