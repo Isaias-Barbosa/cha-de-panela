@@ -23,6 +23,7 @@ interface Loja {
   id?: number;
   loja: string;
   url: string;
+  url2?: string; // link do produto (PresentPage)
   logo: string;
 }
 
@@ -368,22 +369,46 @@ export default function Admin() {
         </div>
 
         {lojasSelecionadas.length > 0 && (
-          <div className="mt-4 bg-white border rounded-lg p-3">
-            <p className="font-semibold mb-2 text-gray-700">
-              Lojas selecionadas:
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              {lojasSelecionadas.map((l) => (
-                <li
-                  key={l.loja}
-                  className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full"
-                >
-                  <img
-                    src={l.logo}
-                    alt={l.loja}
-                    className="w-5 h-5 object-contain"
+          <div className="mt-4 bg-white border rounded-lg p-4 space-y-3">
+            <p className="font-semibold text-gray-700">Lojas selecionadas:</p>
+
+            <ul className="space-y-3">
+              {lojasSelecionadas.map((l, index) => (
+                <li key={l.loja} className="border-b pb-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src={l.logo}
+                      alt={l.loja}
+                      className="w-6 h-6 object-contain"
+                    />
+                    <span className="text-gray-700 font-medium">{l.loja}</span>
+                  </div>
+
+                  {/* Campo 1: URL da loja (link principal, aparece na home) */}
+                  <input
+                    type="text"
+                    placeholder={`URL da loja ${l.loja} (home)`}
+                    value={l.url || ""}
+                    onChange={(e) => {
+                      const novasLojas = [...lojasSelecionadas];
+                      novasLojas[index] = { ...l, url: e.target.value };
+                      setLojasSelecionadas(novasLojas);
+                    }}
+                    className="w-full border border-gray-300 text-gray-800 rounded-lg p-2 mb-2"
                   />
-                  <span className="text-sm">{l.loja}</span>
+
+                  {/* Campo 2: URL do produto (usado na página Presentear) */}
+                  <input
+                    type="text"
+                    placeholder={`URL do produto na ${l.loja}`}
+                    value={l.url2 || ""}
+                    onChange={(e) => {
+                      const novasLojas = [...lojasSelecionadas];
+                      novasLojas[index] = { ...l, url2: e.target.value };
+                      setLojasSelecionadas(novasLojas);
+                    }}
+                    className="w-full border border-gray-300 text-gray-800 rounded-lg p-2"
+                  />
                 </li>
               ))}
             </ul>

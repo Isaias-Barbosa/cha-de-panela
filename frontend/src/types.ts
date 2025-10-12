@@ -9,6 +9,7 @@ export interface Gift {
 export interface GiftLink {
   loja: string;      // Ex: "Amazon"
   url: string;       // link direto para o produto
+  url2?: string; // link do produto (PresentPage)
   logo: string;      // url da logo da loja
 }
 

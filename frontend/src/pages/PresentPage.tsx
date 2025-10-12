@@ -55,39 +55,88 @@ export default function PresentPage() {
   if (!gift) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-pink-50">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-blue-50"
+    style={{
+        backgroundImage:
+          "url('https://www.transparenttextures.com/patterns/flowers.png')",
+        backgroundRepeat: "repeat",
+      }}
+     >
       <div className="max-w-xl w-full bg-white rounded-2xl shadow-md p-6">
-        <div className="flex gap-6">
-          <img src={gift.imagem} alt={gift.nome} className="w-40 h-40  object-cover rounded-lg" />
+        <div className="flex gap-6 mb-6">
+          <img
+            src={gift.imagem}
+            alt={gift.nome}
+            className="w-40 h-40 object-cover rounded-lg"
+          />
           <div className="flex-1">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">{gift.nome}</h2>
-            {gift.tipo && <p className="text-sm text-gray-600 mb-1">Tipo: {gift.tipo}</p>}
-            {gift.corPreferencia && (
-              <p className="text-sm text-gray-600 mb-2">Cor: {gift.corPreferencia}</p>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+              {gift.nome}
+            </h2>
+            {gift.tipo && (
+              <p className="text-sm text-gray-600 mb-1">Tipo: {gift.tipo}</p>
             )}
-            <p className="text-sm text-gray-500 mb-4">Categoria: {gift.categoria}</p>
-
-            <p className="bg-yellow-50 text-gray-800 p-2 rounded mb-4 text-sm">
-              Você realmente deseja comprar este presente para o casal?
+            {gift.corPreferencia && (
+              <p className="text-sm text-gray-600 mb-2">
+                Cor: {gift.corPreferencia}
+              </p>
+            )}
+            <p className="text-sm text-gray-500 mb-4">
+              Categoria: {gift.categoria}
             </p>
+          </div>
+        </div>
 
-            <div className="flex gap-3">
-              <button
-                onClick={handleConfirm}
-                disabled={processing || gift.comprado}
-                className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 disabled:opacity-50"
-              >
-                {processing ? "Confirmando..." : "Sim, confirmar"}
-              </button>
-
-              <button
-                onClick={handleCancel}
-                className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
-              >
-                Não, voltar
-              </button>
+        {/* 🏬 Lojas recomendadas */}
+        {gift.links && gift.links.length > 0 && (
+          <div className="mb-6">
+            <h3 className="font-semibold text-gray-800 mb-1">
+              Se deseja comprar diretamente online, só escolher uma das lojas sugeridas abaixo: 
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {gift.links
+                .filter((l) => l.url2) // agora só mostra se tiver link do produto
+                .map((l) => (
+                  <a
+                    key={l.loja}
+                    href={l.url2}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 border rounded-lg bg-white hover:shadow-md flex items-center gap-2"
+                  >
+                    <img
+                      src={l.logo}
+                      alt={l.loja}
+                      className="w-8 h-8 object-contain"
+                    />
+                    <span className="text-sm font-medium text-gray-700">
+                      {l.loja}
+                    </span>
+                  </a>
+                ))}
             </div>
           </div>
+        )}
+
+        <p className="bg-yellow-50 text-gray-800 p-3 rounded mb-4 text-sm">
+          Você realmente deseja comprar este presente para o casal?
+        </p>
+
+        <div className="flex gap-3">
+          <button
+            onClick={handleConfirm}
+            disabled={processing || gift.comprado}
+            className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 disabled:opacity-50"
+          >
+            {processing ? "Confirmando..." : "Sim, confirmar"}
+          </button>
+
+          <button
+            onClick={handleCancel}
+            className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+          >
+            Não, voltar
+          </button>
         </div>
       </div>
     </div>
