@@ -6,7 +6,7 @@ const isLocal = window.location.hostname === "localhost";
 // Base URL dinâmica
 const baseURL = isLocal
   ? "http://localhost:5000" // quando estiver rodando localmente
-  : "https://cha-de-panela-1.onrender.com"; // substitua pela URL do Render
+  : "isaiasdev-cha-de-pane-87.deno.dev"; // substitua pela URL do Render
 
 const api = axios.create({
   baseURL,
