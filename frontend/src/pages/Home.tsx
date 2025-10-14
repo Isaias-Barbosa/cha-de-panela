@@ -3,6 +3,7 @@ import type { Gift } from "../types";
 import api from "../services/api"; // <- aqui
 import GiftList from "../components/GiftList";
 import MarkGiftModal from "../components/MarkGiftModal";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [gifts, setGifts] = useState<Gift[]>([]);
@@ -25,7 +26,7 @@ export default function Home() {
 
   return (
     
-     <div className="flex flex-col min-h-screen bg-blue-50 py-10 w-full"
+     <div className="flex flex-col min-h-screen bg-blue-50 w-full"
       style={{
         backgroundImage:
           "url('https://www.transparenttextures.com/patterns/flowers.png')",
@@ -43,16 +44,13 @@ export default function Home() {
       {/* Descrição */}
       <p className="text-gray-600 mb-1 text-center max-w-md ">
         Seja bem-vindo(a)! Veja abaixo as sugestões de presentes.
-        <p className="bg-red-300 py-2 text-gray-700 p-1 rounded-lg mb-4 text-center">
-        Ao escolher um presente, por favor, clique no botão Presentear para termos um controle do que foi presenteado.</p>
       </p>
 
        {/* Aviso */}
       <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg mb-8 max-w-3xl text-center">
-        Os links das lojas abaixo são apenas sugestões para os convidados, porém, sinta-se livre
-        para comprar na loja de sua preferência, se não encontrar o que queira comprar aqui no site,
-        pode escolher outro presente também e entregar no dia do Chá de Panelas. <br />
-            <p className="text-gray-600 text-mb">As imagens abaixos são ilustrativas</p>
+        Os links das lojas abaixo são apenas sugestões para os convidados, porém, sintam-se livre
+        para comprar na loja de sua preferência. <br />
+            <p className="text-gray-600 text-mb">As imagens abaixos são apenas ilustrativas</p>
       </div>
       <p className="bg-red-300 py-2 text-gray-700 p-4 rounded-lg mb-8 text-center ">
         Se as imagens dos produtos não aparecer, aguarde entre 30 segundos a 1 minuto que elas irão aparecer de forma automática.</p>
@@ -61,6 +59,8 @@ export default function Home() {
       <GiftList gifts={gifts} />
 
     </div>
+
+      <Footer />
 
       {/* Modal */}
       <MarkGiftModal
@@ -71,6 +71,7 @@ export default function Home() {
       />
 
     
+  
     </div>
     
   );
