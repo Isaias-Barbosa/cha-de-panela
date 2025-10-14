@@ -69,9 +69,6 @@ export default function Home() {
         gifts={gifts}
         onMark={handleMarkAsBought}
       />
-
-    
-  
     </div>
     
   );

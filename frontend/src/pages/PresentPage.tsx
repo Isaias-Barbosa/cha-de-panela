@@ -126,7 +126,7 @@ export default function PresentPage() {
         */}
           <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 inline-block text-gray-600 text-sm">
             <p className="font-medium text-gray-700 mb-1">
-              📦 Se quiser enviar o presente diretamente, basta nos chamar no privado
+              📦 Se quiser enviar o presente diretamente, basta nos chamar no privado.
             </p>
             <div className="text-left inline-block">
               <p>
