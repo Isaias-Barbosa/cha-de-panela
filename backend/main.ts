@@ -8,179 +8,145 @@ const HEADERS = {
   "X-Master-Key": "$2a$10$Fmq.O6jQkbtn8WS5XvGLD.jVkeMLKrAGAJVU7/tRxXNQQyiyxS/Gm",
 };
 
+// Cabeçalhos CORS
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
-  const { pathname } = url;
+  const pathname = url.pathname;
 
-  // ======== GIFTS ========
-
-  // GET /gifts
-  if (req.method === "GET" && pathname === "/gifts") {
-    try {
-      const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
-      const data = await res.json();
-      return json(data.record.gifts || []);
-    } catch {
-      return error("Erro ao buscar gifts");
-    }
+  // Tratamento CORS pré-flight
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: CORS_HEADERS });
   }
 
-  // POST /gifts
-  if (req.method === "POST" && pathname === "/gifts") {
-    try {
-      const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
-      const data = await res.json();
-      const gifts = data.record.gifts || [];
-      const body = await req.json();
-      const newGift = { id: Date.now(), ...body };
-      gifts.push(newGift);
+  try {
+    // ======== GIFTS ========
 
-      await fetch(BIN_URL_GIFTS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, gifts }),
-      });
+    if (pathname === "/gifts") {
+      if (req.method === "GET") {
+        const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
+        const data = await res.json();
+        return json(data.record.gifts || []);
+      }
 
-      return json(newGift, 201);
-    } catch {
-      return error("Erro ao adicionar gift");
+      if (req.method === "POST") {
+        const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
+        const data = await res.json();
+        const gifts = data.record.gifts || [];
+        const body = await req.json();
+        const newGift = { id: Date.now(), ...body };
+        gifts.push(newGift);
+
+        await fetch(BIN_URL_GIFTS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, gifts }),
+        });
+
+        return json(newGift, 201);
+      }
     }
-  }
 
-  // PUT /gifts/:id
-  if (req.method === "PUT" && pathname.startsWith("/gifts/")) {
-    try {
-      const id = pathname.split("/").pop();
-      const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
-      const data = await res.json();
-      let gifts = data.record.gifts || [];
-      const body = await req.json();
-
-      gifts = gifts.map((g: any) => (String(g.id) === id ? { ...g, ...body } : g));
-
-      await fetch(BIN_URL_GIFTS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, gifts }),
-      });
-
-      return json({ message: "Presente atualizado!" });
-    } catch {
-      return error("Erro ao atualizar gift");
-    }
-  }
-
-  // DELETE /gifts/:id
-  if (req.method === "DELETE" && pathname.startsWith("/gifts/")) {
-    try {
+    if (pathname.startsWith("/gifts/")) {
       const id = pathname.split("/").pop();
       const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
       const data = await res.json();
       let gifts = data.record.gifts || [];
 
-      gifts = gifts.filter((g: any) => String(g.id) !== id);
+      if (req.method === "PUT") {
+        const body = await req.json();
+        gifts = gifts.map((g: any) => (String(g.id) === id ? { ...g, ...body } : g));
+        await fetch(BIN_URL_GIFTS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, gifts }),
+        });
+        return json({ message: "Presente atualizado!" });
+      }
 
-      await fetch(BIN_URL_GIFTS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, gifts }),
-      });
-
-      return json({ message: "Presente removido!" });
-    } catch {
-      return error("Erro ao remover gift");
+      if (req.method === "DELETE") {
+        gifts = gifts.filter((g: any) => String(g.id) !== id);
+        await fetch(BIN_URL_GIFTS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, gifts }),
+        });
+        return json({ message: "Presente removido!" });
+      }
     }
-  }
 
-  // ======== LOJAS ========
+    // ======== LOJAS ========
 
-  // GET /lojas
-  if (req.method === "GET" && pathname === "/lojas") {
-    try {
-      const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
-      const data = await res.json();
-      return json(data.record.lojas || []);
-    } catch {
-      return error("Erro ao buscar lojas");
+    if (pathname === "/lojas") {
+      if (req.method === "GET") {
+        const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
+        const data = await res.json();
+        return json(data.record.lojas || []);
+      }
+
+      if (req.method === "POST") {
+        const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
+        const data = await res.json();
+        const lojas = data.record.lojas || [];
+        const body = await req.json();
+        const newLoja = { id: Date.now(), ...body };
+        lojas.push(newLoja);
+
+        await fetch(BIN_URL_LOJAS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, lojas }),
+        });
+
+        return json(newLoja, 201);
+      }
     }
-  }
 
-  // POST /lojas
-  if (req.method === "POST" && pathname === "/lojas") {
-    try {
-      const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
-      const data = await res.json();
-      const lojas = data.record.lojas || [];
-      const body = await req.json();
-      const newLoja = { id: Date.now(), ...body };
-      lojas.push(newLoja);
-
-      await fetch(BIN_URL_LOJAS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, lojas }),
-      });
-
-      return json(newLoja, 201);
-    } catch {
-      return error("Erro ao adicionar loja");
-    }
-  }
-
-  // PUT /lojas/:id
-  if (req.method === "PUT" && pathname.startsWith("/lojas/")) {
-    try {
-      const id = pathname.split("/").pop();
-      const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
-      const data = await res.json();
-      let lojas = data.record.lojas || [];
-      const body = await req.json();
-
-      lojas = lojas.map((l: any) => (String(l.id) === id ? { ...l, ...body } : l));
-
-      await fetch(BIN_URL_LOJAS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, lojas }),
-      });
-
-      return json({ message: "Loja atualizada!" });
-    } catch {
-      return error("Erro ao atualizar loja");
-    }
-  }
-
-  // DELETE /lojas/:id
-  if (req.method === "DELETE" && pathname.startsWith("/lojas/")) {
-    try {
+    if (pathname.startsWith("/lojas/")) {
       const id = pathname.split("/").pop();
       const res = await fetch(BIN_URL_LOJAS, { headers: HEADERS });
       const data = await res.json();
       let lojas = data.record.lojas || [];
 
-      lojas = lojas.filter((l: any) => String(l.id) !== id);
+      if (req.method === "PUT") {
+        const body = await req.json();
+        lojas = lojas.map((l: any) => (String(l.id) === id ? { ...l, ...body } : l));
+        await fetch(BIN_URL_LOJAS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, lojas }),
+        });
+        return json({ message: "Loja atualizada!" });
+      }
 
-      await fetch(BIN_URL_LOJAS, {
-        method: "PUT",
-        headers: HEADERS,
-        body: JSON.stringify({ ...data.record, lojas }),
-      });
-
-      return json({ message: "Loja removida!" });
-    } catch {
-      return error("Erro ao remover loja");
+      if (req.method === "DELETE") {
+        lojas = lojas.filter((l: any) => String(l.id) !== id);
+        await fetch(BIN_URL_LOJAS, {
+          method: "PUT",
+          headers: HEADERS,
+          body: JSON.stringify({ ...data.record, lojas }),
+        });
+        return json({ message: "Loja removida!" });
+      }
     }
-  }
 
-  // Rota padrão
-  return new Response("Backend do Chá de Panela rodando! 🎁", { status: 200 });
+    return new Response("Backend do Chá de Panela rodando! 🎁", { status: 200 });
+  } catch (err) {
+    console.error(err);
+    return error("Erro interno do servidor");
+  }
 }
 
 // Helpers
 function json(data: any, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...CORS_HEADERS },
   });
 }
 
@@ -189,3 +155,4 @@ function error(message: string, status = 500): Response {
 }
 
 serve(handler);
+// Para rodar localmente: deno run --allow-net backend/main.ts
