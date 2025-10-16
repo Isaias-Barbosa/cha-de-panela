@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api"; // <- aqui
 import { Trash2, Pencil } from "lucide-react";
 
@@ -28,6 +29,8 @@ interface Loja {
 }
 
 export default function Admin() {
+  const navigate = useNavigate();
+
   // 🎁 Estados de presentes
   const [nome, setNome] = useState("");
   const [imagem, setImagem] = useState("");
@@ -218,7 +221,12 @@ export default function Admin() {
       <h1 className="text-3xl font-bold mb-6 text-gray-700">
         Admin - Adicionar Presente
       </h1>
-
+      <button
+        onClick={() => navigate("/admin/presentes-entregues")}
+        className="mb-4 px-4 py-2 bg-pink-500 text-white rounded-xl  hover:bg-pink-600 transition"
+      >
+        Ver Presentes Entregues
+      </button>
       <div className="max-w-3xl bg-blue-50 p-6 rounded-2xl shadow-md space-y-4">
         <div>
           <label className="block text-gray-800 font-semibold mb-1">
