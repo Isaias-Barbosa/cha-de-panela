@@ -51,7 +51,7 @@ export default function GiftItem({ gift }: GiftItemProps) {
       {/* Preferências */}
       {gift.tipo && (
         <p className="text-sm text-gray-500 mb-1">
-          Sugestões:{" "}
+          Preferência:{" "}
           <span className="font-medium text-gray-700">{gift.tipo}</span>
         </p>
       )}
