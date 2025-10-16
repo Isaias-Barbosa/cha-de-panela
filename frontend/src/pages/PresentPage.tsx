@@ -77,8 +77,8 @@ export default function PresentPage() {
                 {gift.nome}
               </h2>
               {gift.tipo && (
-                <p className="text-sm text-gray-600 mb-1">
-                  Tipo Sugerido: {gift.tipo}
+                <p className="text-sm text-gray-700 mb-1">
+                  Sugestões: {gift.tipo}
                 </p>
               )}
               {gift.corPreferencia && (

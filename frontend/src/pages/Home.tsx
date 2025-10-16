@@ -52,6 +52,7 @@ export default function Home() {
         para comprar na loja de sua preferência. <br />
             <p className="text-gray-600 text-mb">As imagens abaixos são apenas ilustrativas</p>
       </div>
+
       {/*}
       <p className="bg-red-300 py-2 text-gray-700 p-4 rounded-lg mb-8 text-center ">
         Se as imagens dos produtos não aparecer, aguarde entre 30 segundos a 1 minuto que elas irão aparecer de forma automática.</p>*/}

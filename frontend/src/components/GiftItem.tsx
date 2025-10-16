@@ -44,14 +44,14 @@ export default function GiftItem({ gift }: GiftItemProps) {
         )}
       </div>
 
-
+      <p className="text-sm text-gray-500 mb-2">Imagem Ilustrativa</p>
        {/* Nome do presente */}
-      <h3 className="font-semibold text-lg mb-2 text-gray-800">{gift.nome}</h3>
+      <h3 className="font-semibold text-2xl mb-2 text-gray-800">{gift.nome}</h3>
 
       {/* Preferências */}
       {gift.tipo && (
         <p className="text-sm text-gray-500 mb-1">
-          Tipo preferido:{" "}
+          Sugestões:{" "}
           <span className="font-medium text-gray-700">{gift.tipo}</span>
         </p>
       )}
@@ -71,7 +71,7 @@ export default function GiftItem({ gift }: GiftItemProps) {
       {/* Sugestão de lojas */}
      {gift.links.length > 0 && (
         <>
-          <p className="text-sm text-gray-500 mb-2">Sugestão de lojas</p>
+          <p className="text-sm text-gray-500 mb-2">Sugestão de lojas:</p>
           <div className="flex gap-2 justify-center flex-wrap">
             {gift.links.map((link) => (
               <a
