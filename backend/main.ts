@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
 const BIN_URL_GIFTS = "https://api.jsonbin.io/v3/b/68ea74a943b1c97be962d1c3";
 const BIN_URL_LOJAS = "https://api.jsonbin.io/v3/b/68ea75cfd0ea881f409dc212";
+const BIN_URL_PRESENTES_ENTREGUES = "https://api.jsonbin.io/v3/b/68f16e78ae596e708f17ce2d";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -80,6 +81,61 @@ async function handler(req: Request): Promise<Response> {
       }
     }
 
+    // ======== PRESENTES ENTREGUES ========
+
+if (pathname === "/presentesEntregues") {
+  if (req.method === "GET") {
+    const res = await fetch(BIN_URL_PRESENTES_ENTREGUES, { headers: HEADERS });
+    const data = await res.json();
+    return json(data.record.presentesEntregues || []);
+  }
+
+  if (req.method === "POST") {
+    const res = await fetch(BIN_URL_PRESENTES_ENTREGUES, { headers: HEADERS });
+    const data = await res.json();
+    const entregues = data.record.presentesEntregues || [];
+    const body = await req.json();
+    const newEntregue = { id: Date.now(), ...body };
+    entregues.push(newEntregue);
+
+    await fetch(BIN_URL_PRESENTES_ENTREGUES, {
+      method: "PUT",
+      headers: HEADERS,
+      body: JSON.stringify({ ...data.record, presentesEntregues: entregues }),
+    });
+
+    return json(newEntregue, 201);
+  }
+}
+
+if (pathname.startsWith("/presentesEntregues/")) {
+  const id = pathname.split("/").pop();
+  const res = await fetch(BIN_URL_PRESENTES_ENTREGUES, { headers: HEADERS });
+  const data = await res.json();
+  let entregues = data.record.presentesEntregues || [];
+
+  if (req.method === "PUT") {
+    const body = await req.json();
+    entregues = entregues.map((e: any) => (String(e.id) === id ? { ...e, ...body } : e));
+    await fetch(BIN_URL_PRESENTES_ENTREGUES, {
+      method: "PUT",
+      headers: HEADERS,
+      body: JSON.stringify({ ...data.record, presentesEntregues: entregues }),
+    });
+    return json({ message: "Presente entregue atualizado!" });
+  }
+
+  if (req.method === "DELETE") {
+    entregues = entregues.filter((e: any) => String(e.id) !== id);
+    await fetch(BIN_URL_PRESENTES_ENTREGUES, {
+      method: "PUT",
+      headers: HEADERS,
+      body: JSON.stringify({ ...data.record, presentesEntregues: entregues }),
+    });
+    return json({ message: "Presente entregue removido!" });
+  }
+}
+
     // ======== LOJAS ========
 
     if (pathname === "/lojas") {
@@ -140,7 +196,11 @@ async function handler(req: Request): Promise<Response> {
     console.error(err);
     return error("Erro interno do servidor");
   }
+
+  
 }
+
+
 
 // Helpers
 function json(data: any, status = 200): Response {
