@@ -62,7 +62,7 @@ export default function Home() {
             Data do Chá de Panela
           </h2>
           <p className="text-gray-800 text-xl mt-2 font-medium">
-            15 de março de 2026
+            14 de março de 2026
           </p>
 
         </div>
