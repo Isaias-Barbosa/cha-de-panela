@@ -130,10 +130,7 @@ export default function PresentPage() {
             </p>
             <div className="text-left inline-block">
               <p>
-                <strong>Isaías:</strong> 61 9 96242678 
-              </p>
-              <p>
-                <strong>Paula:</strong> 61 9 93349363
+                <strong>Mila:</strong> 61 9 9147-7954 (WhatsApp)
               </p>
             </div>
           </div>

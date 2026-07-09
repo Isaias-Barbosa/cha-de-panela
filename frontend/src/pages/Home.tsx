@@ -37,10 +37,10 @@ export default function Home() {
       <div className="flex flex-col items-center py-10 flex-1">
         {/* Título */}
         <h1
-          className="text-3xl font-['Great_Vibes'] mb-4 text-gray-700 text-center"
+          className="text-3xl font-['Merriweather'] mb-4 text-gray-700 text-center"
           style={{ letterSpacing: "1px" }}
         >
-          Chá de Panela Isaías & Paula 💕
+          Chá de Casa Nova da Mila 💕
         </h1>
         {/* Descrição */}
         <p className="text-gray-600 mb-5 text-center max-w-md ">
@@ -59,10 +59,12 @@ export default function Home() {
         {/* Cartão de data */}
         <div className="border border-gray-700 rounded-2xl px-8 py-5 mb-10 text-center">
           <h2 className="text-2xl font-semibold text-pink-700 drop-shadow-sm">
-            Data do Chá de Panela
+            Data do Chá de Casa Nova
           </h2>
           <p className="text-gray-800 text-xl mt-2 font-medium">
-            14 de março de 2026
+            12 de Setembro de 2026<br>
+            </br>
+            <p className="text-blue-500">Igreja Cenáculo de Cristo</p> às 17:00h
           </p>
 
         </div>
