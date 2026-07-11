@@ -13,8 +13,10 @@ const HEADERS = {
 // Cabeçalhos CORS
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods":
+    "GET, POST, PUT, DELETE, OPTIONS, PATCH",
+  "Access-Control-Allow-Headers":
+    "Content-Type, Authorization",
 };
 
 async function handler(req: Request): Promise<Response> {
@@ -263,5 +265,7 @@ function error(message: string, status = 500): Response {
   return json({ error: message }, status);
 }
 
-serve(handler);
+serve(() => {
+  return new Response("OK Deno Deploy");
+});
 // Para rodar localmente: deno run --allow-net backend/main.ts
