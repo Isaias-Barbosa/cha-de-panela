@@ -265,7 +265,5 @@ function error(message: string, status = 500): Response {
   return json({ error: message }, status);
 }
 
-serve(() => {
-  return new Response("OK Deno Deploy");
-});
+serve(handler);
 // Para rodar localmente: deno run --allow-net backend/main.ts
