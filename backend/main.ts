@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
-const BIN_URL_GIFTS = "https://api.jsonbin.io/v3/b/68ea74a943b1c97be962d1c3";
+const BIN_URL_GIFTS1 = "https://api.jsonbin.io/v3/b/68ea74a943b1c97be962d1c3"; //antigo
+const BIN_URL_GIFTS2 = "https://api.jsonbin.io/v3/b/6a52752eda38895dfe4fef7c"; //novo
 const BIN_URL_LOJAS = "https://api.jsonbin.io/v3/b/68ea75cfd0ea881f409dc212";
 const BIN_URL_PRESENTES_ENTREGUES = "https://api.jsonbin.io/v3/b/68f16e78ae596e708f17ce2d";
 
@@ -29,57 +30,104 @@ async function handler(req: Request): Promise<Response> {
     // ======== GIFTS ========
 
     if (pathname === "/gifts") {
-      if (req.method === "GET") {
-        const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
-        const data = await res.json();
-        return json(data.record.gifts || []);
+     if (req.method === "GET") {
+    const [res1, res2] = await Promise.all([
+      fetch(BIN_URL_GIFTS1, { headers: HEADERS }),
+      fetch(BIN_URL_GIFTS2, { headers: HEADERS }),
+    ]);
+
+    const data1 = await res1.json();
+    const data2 = await res2.json();
+
+    const gifts1 = data1.record.gifts || [];
+    const gifts2 = data2.record.gifts || [];
+
+    return json([...gifts1, ...gifts2]);
       }
 
       if (req.method === "POST") {
-        const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
+        const res = await fetch(BIN_URL_GIFTS2, {
+  headers: HEADERS,
+});
         const data = await res.json();
         const gifts = data.record.gifts || [];
         const body = await req.json();
         const newGift = { id: Date.now(), ...body };
         gifts.push(newGift);
 
-        await fetch(BIN_URL_GIFTS, {
-          method: "PUT",
-          headers: HEADERS,
-          body: JSON.stringify({ ...data.record, gifts }),
-        });
+        const update = await fetch(BIN_URL_GIFTS2, {
+  method: "PUT",
+  headers: HEADERS,
+  body: JSON.stringify({
+    ...data.record,
+    gifts,
+  }),
+});
 
-        return json(newGift, 201);
+        const responseText = await update.text();
+
+        console.log("Status JSONBin:", update.status);
+        console.log("Resposta JSONBin:", responseText);
+
+        if (!update.ok) {
+          return error(`Erro ao salvar no JSONBin: ${responseText}`, update.status);
+        }
+
+      return json(newGift, 201);
       }
     }
 
     if (pathname.startsWith("/gifts/")) {
       const id = pathname.split("/").pop();
-      const res = await fetch(BIN_URL_GIFTS, { headers: HEADERS });
-      const data = await res.json();
-      let gifts = data.record.gifts || [];
 
-      if (req.method === "PUT") {
-        const body = await req.json();
-        gifts = gifts.map((g: any) => (String(g.id) === id ? { ...g, ...body } : g));
-        await fetch(BIN_URL_GIFTS, {
-          method: "PUT",
-          headers: HEADERS,
-          body: JSON.stringify({ ...data.record, gifts }),
-        });
-        return json({ message: "Presente atualizado!" });
-      }
+  const bins = [BIN_URL_GIFTS1, BIN_URL_GIFTS2];
 
-      if (req.method === "DELETE") {
-        gifts = gifts.filter((g: any) => String(g.id) !== id);
-        await fetch(BIN_URL_GIFTS, {
-          method: "PUT",
-          headers: HEADERS,
-          body: JSON.stringify({ ...data.record, gifts }),
-        });
-        return json({ message: "Presente removido!" });
-      }
+  for (const bin of bins) {
+    const res = await fetch(bin, { headers: HEADERS });
+    const data = await res.json();
+    let gifts = data.record.gifts || [];
+
+    const existe = gifts.some((g: any) => String(g.id) === id);
+
+    if (!existe) continue;
+
+    if (req.method === "PUT") {
+      const body = await req.json();
+
+      gifts = gifts.map((g: any) =>
+        String(g.id) === id ? { ...g, ...body } : g
+      );
+
+      await fetch(bin, {
+        method: "PUT",
+        headers: HEADERS,
+        body: JSON.stringify({
+          ...data.record,
+          gifts,
+        }),
+      });
+
+      return json({ message: "Presente atualizado!" });
     }
+
+    if (req.method === "DELETE") {
+      gifts = gifts.filter((g: any) => String(g.id) !== id);
+
+      await fetch(bin, {
+        method: "PUT",
+        headers: HEADERS,
+        body: JSON.stringify({
+          ...data.record,
+          gifts,
+        }),
+      });
+
+      return json({ message: "Presente removido!" });
+    }
+  }
+
+  return error("Presente não encontrado", 404);
+}
 
     // ======== PRESENTES ENTREGUES ========
 
@@ -196,6 +244,7 @@ if (pathname.startsWith("/presentesEntregues/")) {
     console.error(err);
     return error("Erro interno do servidor");
   }
+  
 
   
 }

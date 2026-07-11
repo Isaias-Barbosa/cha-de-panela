@@ -9,7 +9,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 // 🔗 URL do seu JSONBin
-const BIN_URL_GIFTS = "https://api.jsonbin.io/v3/b/68ea74a943b1c97be962d1c3";
+const BIN_URL_GIFTS1 = "https://api.jsonbin.io/v3/b/68ea74a943b1c97be962d1c3"; //antigo
+const BIN_URL_GIFTS2 = "https://api.jsonbin.io/v3/b/6a52752eda38895dfe4fef7c"; //novo
 const BIN_URL_LOJAS  = "https://api.jsonbin.io/v3/b/68ea75cfd0ea881f409dc212";
 const BIN_URL_PRESENTES_ENTREGUES = "https://api.jsonbin.io/v3/b/68f16e78ae596e708f17ce2d";
 
@@ -25,9 +26,16 @@ const HEADERS = {
 
 // Listar todos os presentes
 app.get("/gifts", async (req, res) => {
-  try {
-    const response = await axios.get(BIN_URL_GIFTS, { headers: HEADERS });
-    res.json(response.data.record.gifts || []);
+ try {
+    const [res1, res2] = await Promise.all([
+      axios.get(BIN_URL_GIFTS1, { headers: HEADERS }),
+      axios.get(BIN_URL_GIFTS2, { headers: HEADERS }),
+    ]);
+
+    const gifts1 = res1.data.record.gifts || [];
+    const gifts2 = res2.data.record.gifts || [];
+
+    res.json([...gifts1, ...gifts2]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao buscar gifts" });
@@ -37,38 +45,84 @@ app.get("/gifts", async (req, res) => {
 // Adicionar novo presente
 app.post("/gifts", async (req, res) => {
   try {
-    const { data } = await axios.get(BIN_URL_GIFTS, { headers: HEADERS });
-    const gifts = data.record.gifts || [];
-    const newGift = { id: Date.now(), ...req.body };
-    gifts.push(newGift);
-
-    await axios.put(
-      BIN_URL_GIFTS,
-      { ...data.record, gifts },
-      { headers: HEADERS }
-    );
-
-    res.status(201).json(newGift);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao adicionar gift" });
-  }
+    const { data } = await axios.get(BIN_URL_GIFTS2, {
+  headers: HEADERS,
 });
+
+const gifts = data.record.gifts || [];
+
+const newGift = {
+  id: Date.now(),
+  ...req.body,
+};
+
+gifts.push(newGift);
+
+await axios.put(
+  BIN_URL_GIFTS_2,
+  { ...data.record, gifts },
+  { headers: HEADERS }
+);
+
+res.status(201).json(newGift);
+  }  catch (error) {
+  console.log("Status:", error.response?.status);
+  console.log("Dados:", error.response?.data);
+  console.log("Headers:", error.response?.headers);
+
+  console.error(error);
+
+  res.status(500).json({ error: "Erro ao adicionar gift" });
+}
+}
+);
 
 // Editar presente
 app.put("/gifts/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data } = await axios.get(BIN_URL_GIFTS, { headers: HEADERS });
-    let gifts = data.record.gifts || [];
 
-    gifts = gifts.map((g) => (g.id == id ? { ...g, ...req.body } : g));
+    const bins = [BIN_URL_GIFTS1, BIN_URL_GIFTS2];
 
-    await axios.put(BIN_URL_GIFTS, { ...data.record, gifts }, { headers: HEADERS });
-    res.json({ message: "Presente atualizado!" });
+    for (const bin of bins) {
+      const { data } = await axios.get(bin, { headers: HEADERS });
+
+      let gifts = data.record.gifts || [];
+
+      const index = gifts.findIndex(g => String(g.id) === id);
+
+      if (index !== -1) {
+        gifts[index] = {
+          ...gifts[index],
+          ...req.body,
+        };
+
+        await axios.put(
+          bin,
+          {
+            ...data.record,
+            gifts,
+          },
+          {
+            headers: HEADERS,
+          }
+        );
+
+        return res.json({
+          message: "Atualizado!",
+        });
+      }
+    }
+
+    res.status(404).json({
+      error: "Gift não encontrado",
+    });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao atualizar gift" });
+    res.status(500).json({
+      error: "Erro ao atualizar gift",
+    });
   }
 });
 
@@ -76,25 +130,63 @@ app.put("/gifts/:id", async (req, res) => {
 app.delete("/gifts/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { data } = await axios.get(BIN_URL_GIFTS, { headers: HEADERS });
-    let gifts = data.record.gifts || [];
 
-    gifts = gifts.filter((g) => g.id != id);
+    const bins = [BIN_URL_GIFTS1, BIN_URL_GIFTS2];
 
-    await axios.put(BIN_URL_GIFTS, { ...data.record, gifts }, { headers: HEADERS });
-    res.json({ message: "Presente removido!" });
+    for (const bin of bins) {
+      const { data } = await axios.get(bin, {
+        headers: HEADERS,
+      });
+
+      const gifts = data.record.gifts || [];
+
+      if (gifts.some(g => String(g.id) === id)) {
+
+        const novos = gifts.filter(g => String(g.id) !== id);
+
+        await axios.put(
+          bin,
+          {
+            ...data.record,
+            gifts: novos,
+          },
+          {
+            headers: HEADERS,
+          }
+        );
+
+        return res.json({
+          message: "Removido!",
+        });
+      }
+    }
+
+    res.status(404).json({
+      error: "Gift não encontrado",
+    });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Erro ao remover gift" });
+    res.status(500).json({
+      error: "Erro ao remover gift",
+    });
   }
 });
 
 // Listar apenas presentes comprados
 app.get("/gifts/comprados", async (req, res) => {
   try {
-    const { data } = await axios.get(BIN_URL_GIFTS, { headers: HEADERS });
-    const gifts = data.record.gifts || [];
-    const comprados = gifts.filter((g) => g.comprado === true);
+    const [res1, res2] = await Promise.all([
+  axios.get(BIN_URL_GIFTS1, { headers: HEADERS }),
+  axios.get(BIN_URL_GIFTS2, { headers: HEADERS }),
+]);
+
+const gifts = [
+  ...(res1.data.record.gifts || []),
+  ...(res2.data.record.gifts || []),
+];
+
+const comprados = gifts.filter(g => g.comprado);
     res.json(comprados);
   } catch (error) {
     console.error(error);
