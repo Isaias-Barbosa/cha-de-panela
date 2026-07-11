@@ -7,7 +7,7 @@ const BIN_URL_PRESENTES_ENTREGUES = "https://api.jsonbin.io/v3/b/68f16e78ae596e7
 
 const HEADERS = {
   "Content-Type": "application/json",
-  "X-Master-Key": "$2a$10$Fmq.O6jQkbtn8WS5XvGLD.jVkeMLKrAGAJVU7/tRxXNQQyiyxS/Gm",
+  "X-Master-Key": "JSONBIN_KEY",
 };
 
 // Cabeçalhos CORS
